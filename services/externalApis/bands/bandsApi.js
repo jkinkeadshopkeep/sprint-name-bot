@@ -1,12 +1,11 @@
 const fetch = require('node-fetch');
 
-function getBandLists (body) {
-  const urlParams = body.text.split(' ');
-  const searchParam = checkForParam(urlParams[0]);
+function getBandLists (urlParams) {
+  const searchParam = checkForParam(urlParams[1]);
 
   return fetch(`https://musicbrainz.org/ws/2/artist?query=artist:${searchParam}* AND type:group&limit=100&offset=0&fmt=json`).then((res) => {
     return res.json().then((list) => {
-      return selectRandomItemsFromArray(filterArrayList(list, searchParam), urlParams[1]);
+      return selectRandomItemsFromArray(filterArrayList(list, searchParam), urlParams[2]);
     });
   }).catch((err) => {
     return err;
