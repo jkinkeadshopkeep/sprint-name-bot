@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon bin/www.js"
+    "start": "nodemon app.js"
   },
   "dependencies": {
     "@slack/web-api": "^6.1.0",

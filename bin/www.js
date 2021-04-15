@@ -1,39 +1,30 @@
-require('dotenv').config();
-const app = require('../app');
-const logger = require('../services/common/logger');
+const fs = require('fs');
+const path = require('path');
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const helmet = require('helmet');
+const xss = require('../services/common/XssService');
+const routesPath = './api/routes/';
 
-const port = normalizePort(process.env.PORT || '3000');
-app.listen(port, () => {
-  logger.log(`HTTP listener on http://localhost:${port}`);
+const app = express();
+app.use(helmet());
+app.use(morgan('combined'));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
+app.use(cookieParser());
+
+app.use(express.static(__dirname));
+
+app.use((req, res, next) => {
+  req.body = xss.DoXss(req.body);
+  next();
 });
-app.on('error', onError);
 
-function normalizePort (val) {
-  const port = parseInt(val, 10);
-  if (isNaN(port)) return val;
+// eslint-disable-next-line node/handle-callback-err
+fs.readdir(path.resolve(routesPath), (err, files) => {
+  files.forEach((file) => app.use(`/${file.replace('.js', '')}`, require(`.${routesPath}${file}`)));
+});
 
-  if (port >= 0) return port;
-
-  return false;
-}
-
-function onError (error) {
-  if (error.syscall !== 'listen') throw error;
-
-  const bind = typeof port === 'string' ? `Pipe ${port}` : `Port ${port}`;
-
-  switch (error.code) {
-    case 'EACCES':
-      // eslint-disable-next-line no-console
-      console.error(`${bind} requires elevated privileges`);
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      // eslint-disable-next-line no-console
-      console.error(`${bind} is already in use`);
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-}
+module.exports = app;
