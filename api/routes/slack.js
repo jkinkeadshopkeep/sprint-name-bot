@@ -7,8 +7,8 @@ router.post('/createPoll', createPoll);
 
 function createPoll (req, res) {
   return slackService.createAndPostSprintNames(req.body)
-    .then(() => res.sendStatus(200))
-    .catch(() => res.sendStatus(500));
+    .then(() => res.status(200).send('List returned'))
+    .catch((err) => res.status(500).send(err.message));
 }
 
 module.exports = router;

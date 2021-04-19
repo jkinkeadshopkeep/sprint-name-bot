@@ -1,19 +1,20 @@
 const slackEmojis = require('./data/slackEmojis.json');
-const slackApi = require('../../services/slackapi/slackApi');
+const slackWebApi = require('./slackWebApi');
 const bandsApi = require('../../services/externalApis/bands/bandsApi');
 
 function createAndPostSprintNames (body) {
   const urlParams = body.text.split(' ');
   return fetchApiTopicList(urlParams).then((sprintNameList) => {
-    return slackApi.postMessage({ channel: body.channel_name, text: sprintNameList });
+    return slackWebApi.postMessage({ channel: body.channel_name, text: sprintNameList });
   });
 }
 
 function fetchApiTopicList (urlParams) {
+  urlParams[0].toLowerCase();
   switch (urlParams[0]) {
-    case 'Bands':
+    case 'bands':
       return bandsApi.getBandLists(urlParams).then((bandList) => formatList(bandList));
-    case 'Superheros':
+    case 'superheros':
       return Promise.resolve('Superhero list');
     default:
       return bandsApi.getBandLists(urlParams).then((bandList) => formatList(bandList));

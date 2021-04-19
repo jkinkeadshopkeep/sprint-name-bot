@@ -13,7 +13,7 @@ function getBandLists (urlParams) {
 }
 
 function checkForParam (searchParam) {
-  return !searchParam ? ('ABCDEFGHIJKLMNOPQRSTUVWXYZ').split('')[(Math.floor(Math.random() * 26))] : searchParam;
+  return !searchParam ? ('ABCDEFGHIJKLMNOPQRSTUVWXYZ').split('')[(Math.floor(Math.random() * 26))] : searchParam.toUpperCase();
 }
 
 function filterArrayList (list, searchParam) {
@@ -22,13 +22,13 @@ function filterArrayList (list, searchParam) {
 
 function selectRandomItemsFromArray (list, listSizeParam) {
   const listSizeParamToInt = listSizeParam ? parseInt(listSizeParam) - 1 : 4;
-  const listSize = (listSizeParamToInt > 9) ? 5 : listSizeParamToInt;
+  const listSize = (listSizeParamToInt > 9) ? 9 : listSizeParamToInt;
   const randomList = [];
 
   for (let i = 0; i <= listSize; i++) {
     randomList.push(list[Math.floor(Math.random() * list.length)]);
   }
-  return randomList;
+  return randomList.filter(Boolean);
 }
 
 exports.getBandLists = getBandLists;

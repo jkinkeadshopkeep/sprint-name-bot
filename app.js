@@ -1,4 +1,3 @@
-require('dotenv').config();
 const app = require('./bin/www');
 const logger = require('./services/common/logger');
 
