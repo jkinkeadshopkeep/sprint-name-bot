@@ -35,6 +35,12 @@ npm run dev
 
 To create a poll use the following commands:
 
+## Testing
+To execute all unit tests:
+```
+npm run test
+```
+
 ### Random list of 5 bands
 ```
 /createPoll
