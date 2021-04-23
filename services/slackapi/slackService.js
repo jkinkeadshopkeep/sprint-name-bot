@@ -31,7 +31,7 @@ function formatList (list) {
     list.forEach((listValue, index) => {
       formattedList = formattedList + `>${slackEmojis[index.toString()]} ${listValue}\n`;
     });
-    return formattedList + '\n Please vote for the next sprint name by selecting the emoji beside name choice.';
+    return formattedList + '\n Please vote for the next sprint name by selecting the appropriate choice.';
   }
   return 'A list could not be generated with the parameters passed :skull:';
 }

@@ -26,7 +26,9 @@ function selectRandomItemsFromArray (list, listSizeParam) {
   const randomList = [];
 
   for (let i = 0; i <= listSize; i++) {
-    randomList.push(list[Math.floor(Math.random() * list.length)]);
+    const randomIndex = Math.floor(Math.random() * list.length);
+    randomList.push(list[randomIndex]);
+    list.splice(randomIndex, 1);
   }
   return randomList.filter(Boolean);
 }
