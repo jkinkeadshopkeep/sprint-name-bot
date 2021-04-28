@@ -1,3 +1,5 @@
+const localtunnel = require('localtunnel');
+
 const app = require('./bin/www');
 const logger = require('./services/common/logger');
 
@@ -6,6 +8,17 @@ app.listen(port, () => {
   logger.log(`HTTP listener on http://localhost:${port}`);
 });
 app.on('error', onError);
+
+(async () => {
+  const tunnel = await localtunnel({ port: 3000, subdomain: 'sprintnamebot' });
+
+  logger.log(`Localtunnel URL: ${tunnel.url}`);
+  tunnel.url;
+
+  tunnel.on('close', () => {
+    logger.log('Local tunnel closed.');
+  });
+})();
 
 function normalizePort (val) {
   const port = parseInt(val, 10);

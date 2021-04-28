@@ -1,0 +1,14 @@
+version: '3.5'
+services:
+  service: &default
+    build: .
+    command: npm start
+    env_file: .env
+    environment:
+      SLACK_TOKEN: ${SLACK_TOKEN}
+    ports:
+      - "0.0.0.0:3000:3000"
+
+  test:
+    build: .
+    command: npm run test

@@ -6,7 +6,7 @@ This is a slack bot api which allows the generation of random lists using a topi
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-### Setup
+### Local Setup
 NOTE: You may have to create your own slack bot in order to test this locally in an isolated environment.
 
 A step-by-step guide to get the application running:
@@ -26,9 +26,13 @@ npm install
 npm start
 ```
 
-4. Run this command to setup localtunnel - subdomain is already set should you should not need to change anything.
+### Docker
+
+Use `docker-compose` to build the environment and run the bot.
+
 ```
-npm run dev
+docker-compose build service
+docker-compose run service
 ```
 
 ## Slack Commands
